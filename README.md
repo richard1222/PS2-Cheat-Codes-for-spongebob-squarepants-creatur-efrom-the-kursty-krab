@@ -833,6 +833,22 @@ These suggest hidden unlock mechanisms that may be related to debug mode.
 ### Conclusion
 The debug activation mechanism is not straightforward. The debug flags exist in the executable but their activation method is not yet determined. Further investigation needed.
 
+
+### Activation Attempt 4: Debug Flag Table Patching
+
+Patched all debug flag defaults in the table at 0x414890:
+- dispflags: 0 → 1
+- pspclipping: 0 → 1
+- palmode: 0 → 1
+- initflags: 516 → 527 (0x204 → 0x20F)
+- debuginvertxaxis: 0 → 1
+- debuginvertyaxis: 0 → 1
+
+### Test ISO
+- **File:** CftKK_Debug.iso (on desktop)
+- **Changes:** All debug flag defaults set to 1
+- **Status:** Needs hardware testing
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
