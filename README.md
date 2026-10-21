@@ -571,6 +571,40 @@ In Progress - Investigating activation method
 
 ---
 
+
+---
+
+## Debug Activation Attempt
+
+### Method: SYSTEM.CNF Modification
+
+Modified the SYSTEM.CNF to pass debug flags as command-line arguments:
+`
+BOOT2 = cdrom0:\SLUS_213.91;1 debugpad showfps
+VER = 1.01
+VMODE = NTSC
+`
+
+Based on PSX documentation, the BOOT line can include an optional 128-byte command line argument string.
+
+### Test ISO
+- **File:** CftKK_Debug.iso (on desktop)
+- **Changes:** SYSTEM.CNF modified to include debugpad showfps
+- **Status:** Needs hardware testing
+
+### Expected Result
+If debug mode activates, the game should show:
+- FPS counter (showfps)
+- Debug pad info (debugpad)
+- Possibly other debug overlays
+
+### If It Doesn't Work
+Alternative approaches:
+1. Modify the ELF directly to enable debug flags
+2. Find a config file mechanism
+3. Memory address manipulation at runtime
+4. Button combination at boot
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
