@@ -1,97 +1,103 @@
-# SpongeBob Creature from the Krusty Krab — Research Toolkit v1.1.0
+# SpongeBob: Creature from the Krusty Krab — PS2 Debug Research & Toolkit
 
-**v1.1.0 is a stable read-only research toolkit**, not a PS2 debug ISO, a patcher,
-or a complete ARM-to-MIPS translator. It cannot activate debug features without
-verified game-specific reverse engineering.
+Research into recovering a **PS2 debug menu and other working developer features**,
+with original Python analysis tools and documented evidence.
 
-The archive contains original Python utilities and synthetic tests only. **No
-retail game files, binaries, copyrighted assets, or private OpenCode exports.**
+**Current status:** no working PS2 debug menu or finished debug ISO has been produced.
+The published [v1.1.0 toolkit](../../releases/tag/v1.1.0) provides read-only scanners.
+The repository also contains newer development tools described below.
 
-## Windows quick start
+## Findings so far
 
-Install Python 3.10 or newer. Extract the release ZIP to a folder. Open a terminal
-in that folder. These commands need no third-party packages:
+| Area | Verified result | Limit |
+|---|---|---|
+| May 25, 2006 DS prototype | Boots directly into its debug menu; three pages navigate; Engine Parts launches and responds to movement; Patrick GYM launches | Tested in DeSmuME, not on PS2 |
+| Uploaded USA PS2 executable | ELF layout, SHA-256, debug strings, configuration consumers and native menu references inspected | Strings and static references do not prove a working debug menu |
+| PS2 menu infrastructure | Variable Menu has construction and callback code in the pause-menu system | Its developer purpose is unconfirmed; it may be an ordinary menu component |
+| Development frontend package | Executable requests Splash 640x480 from frontend_devpackage | Package name alone does not demonstrate a hidden interface |
+| Earlier initflags experiment | Bit 0 is set by the exclusive option handler | Changing 0x204 to 0x205 is not an established debug-menu activation |
+
+Free-camera and standalone level-selection patches are outside the current requested scope.
+DS code, addresses and state identifiers cannot be applied directly to the PS2 game.
+
+## Windows: collect menu evidence
+
+Use Python 3.10 or newer. Download the repository ZIP using **Code → Download ZIP**,
+then **extract it**. Open the extracted folder containing tools and double-click:
+
+**Run-Menu-Collector.cmd**
+
+Choose your original PS2 ISO and a new output ZIP filename in the file pickers.
+The collector gathers selected pause/debug menu resources for private analysis.
+The original ISO is opened read-only; existing output files are refused.
+If a dialog reports an error, copy that exact message.
+
+The command-line equivalent, run from the folder containing tools, is:
+
+```powershell
+py tools\collect_menu_evidence.py "C:\path\game.iso" "spongebob-menu-evidence.zip"
+```
+
+The collector has synthetic archive and ISO tests. Its retail PAKS compatibility
+has not yet been verified here. Selected package bytes are capped at 64 MiB.
+The resulting evidence ZIP contains game resources: share it privately, not in this repository.
+
+## Analysis commands
+
+The core tools need only the Python standard library. The file-picker launcher also
+needs Tkinter, normally included with the Windows Python installer.
 
 ```powershell
 py tools\spongebob.py doctor
+py tools\spongebob.py scan-iso "C:\path\game.iso" --json ps2-report.json
+py tools\spongebob.py scan-elf SLUS_213.91 --json elf-report.json
+py tools\spongebob.py scan-nds prototype.nds --json prototype-report.json
+py tools\spongebob.py inspect-address SLUS_213.91 --address 0x5138E4 --json data-refs.json
+```
+
+On Linux/macOS use python3 and local paths. Report filenames must not already
+exist. These scanners do not modify their inputs.
+
+| Command | Purpose |
+|---|---|
+| doctor | Report optional dependencies without installing them |
+| scan-iso | Inspect a root-level PS2 boot ELF in a 2048-byte-sector ISO9660 image |
+| scan-elf | Find debug strings and candidate MIPS address constructions |
+| scan-arm9 | Inspect A32 literal references and nearby direct calls |
+| scan-nds | Validate NDS ARM9 bounds and run the prototype scanner directly |
+| inspect-address | Find aligned pointer slots and candidate MIPS memory accesses |
+
+scan-nds, inspect-address and the evidence collector are development additions
+beyond the published v1.1.0 archive. Legacy ARM-to-MIPS scripts are limited research
+demonstrations; they do not port the DS engine or build PS2 debug menus.
+Optional Capstone, Unicorn and LLVM tools are not required for the core scanners.
+
+## Research notes
+
+- [Original PS2 cheats and research guide](docs/PS2_CHEATS_RESEARCH_ARCHIVE.md)
+- [DS prototype debug-menu trace and runtime tests](docs/NDS_PROTOTYPE_DEBUG_TRACE.md)
+- [Uploaded PS2 executable audit](docs/PS2_UPLOADED_ELF_AUDIT.md)
+- [PS2 configuration trace and corrected flag interpretation](docs/PS2_CONFIGURATION_TRACE.md)
+- [PS2 debug-menu investigation and resource evidence](docs/PS2_DEBUG_MENU_INVESTIGATION.md)
+- [Historical native camera research](docs/PS2_NATIVE_FREE_CAMERA_TRACE.md)
+- [Published release notes](RELEASE_NOTES.md)
+
+The original research archive preserves earlier hypotheses and unsuccessful patch
+attempts. Use the newer evidence notes when assessing those claims.
+
+## Validation and limits
+
+```powershell
 py -m unittest discover -s tests -v
-py tools\spongebob.py scan-iso "C:\path\to\your-own-SpongeBob.iso" --json ps2_report.json
 ```
 
-For a standalone PS2 MIPS ELF or the extracted prototype ARM9:
+Latest local suite: **110 tests ran, 109 passed, 1 skipped**. Scanner and collector
+tests use synthetic fixtures; they are not PS2 hardware or debug-ISO validation.
+The Windows GUI has been syntax-checked; it has not been interactively tested on Windows here.
 
-```powershell
-py tools\spongebob.py scan-elf "C:\path\to\SLUS_213.91" --json elf_report.json
-py tools\spongebob.py scan-arm9 arm9.bin --term "DEBUG OPTIONS" --json arm9_report.json
-```
+Static matches are candidates, not proof of reachability. MIPS analysis does not
+cover all R5900 instructions, indirect pointers or gp-relative accesses. The package
+builder creates source-only archives with an embedded SHA-256 manifest.
 
-On Linux or macOS replace `py` with `python3` and use standard local paths.
-
-When using `--json`, the output filename must **not already exist** and cannot
-be the input path. Omit `--json` for JSON printed to stdout. Input game files
-are read-only and never modified. The ISO scanner supports 2048-byte-sector
-ISO9660 images with a root-level `SLUS_213.91`. It does not follow other formats.
-
-## Commands
-
-| Command | Function | Limits |
-|---|---|---|
-| `doctor` | Detect optional Capstone, Unicorn, Clang and LLVM without installing | Standard library |
-| `scan-iso` | Find boot executable in ISO and inspect debug strings and MIPS references | 4 MiB root directory, 64 MiB ELF |
-| `scan-elf` | Inspect ELF32 MIPS segments and candidate `LUI + ADDIU/ORI` references | 64 MiB input, bounded hit count |
-| `scan-arm9` | Analyze A32 literal-pool references and neighboring `BL` calls | 32 MiB input, bounded radius/hits |
-
-The legacy scripts in `tools/` are included for compatibility and deeper manual
-analysis, including a *restricted* ARM-to-MIPS prototype. Some support options
-are research-only and do not provide runtime-equivalent MIPS or PS2 patches.
-
-## Accuracy and limitations
-
-- A string occurrence is not evidence that the feature is reachable.
-- A static xref is only a candidate until verified in disassembly and execution.
-- The MIPS scanner does not follow `$gp`-relative or all EE/R5900 instructions.
-  It now conservatively stops when unmodeled instructions may overwrite
-  pointer registers, trading completeness for fewer false matches.
-- The ARM/DS and PS2 games differ in architecture, hardware, code and engine.
-- Unit tests use synthetic ELF/ISO/ARM9 fixtures, **not the retail executable**.
-- Optional Capstone and Unicorn packages are NOT required and are NOT yet wired
-  into the converter. `doctor` reports presence, not actual emulation readiness.
-
-For an original game executable, record its SHA-256 before interpreting offsets.
-Keep game binaries private, and share only JSON research reports.
-
-## Optional packages
-
-```powershell
-py -m pip install -r requirements-optional.txt
-```
-
-See `RELEASE_NOTES.md` for version-specific QA and release scope. The evidence-first
-workflow follows deucebucket's public [No Tool, No Blocker](https://github.com/deucebucket/no-tool-no-blocker)
-ideas without redistributing its code or installing its skill in ChatGPT.
-
-## Earlier PS2 cheats and research
-
-The repository also preserves its original PS2 cheat codes, developer-console
-research and notes in [`docs/PS2_CHEATS_RESEARCH_ARCHIVE.md`](https://github.com/richard1222/PS2-Cheat-Codes-for-spongebob-squarepants-creatur-efrom-the-kursty-krab/blob/main/docs/PS2_CHEATS_RESEARCH_ARCHIVE.md).
-That historical guide is not bundled in this small source-only release ZIP.
-
-
-## Prototype research (development)
-
-`python tools/spongebob.py scan-nds prototype.nds --json prototype-report.json`
-validates the NDS ARM9 extent and runs the existing debug-string/call-context
-analysis directly on the prototype. The input remains unchanged. DS addresses
-are research leads, not PS2 patch offsets.
-
-## PS2 configuration references (development)
-
-```powershell
-py tools/spongebob.py inspect-address SLUS_213.91 --address 0x5138E4 --json config-refs.json
-```
-
-Finds aligned pointer slots in loaded segments and candidate `LUI` plus
-immediate memory accesses to exact virtual addresses. Inputs remain unchanged;
-reports identify the input SHA-256. Addresses are specific to the analyzed build.
-Unknown register writes and control transfers stop speculative tracking. This
-command does not follow indirect or `$gp` references or establish reachability.
+Only original tools, tests and research documentation belong in this repository.
+Game ISOs, ROMs, extracted executables/resources and private transfers stay outside it.
