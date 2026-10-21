@@ -40,7 +40,7 @@ def parse_elf(blob: bytes) -> dict:
     for n in range(phnum):
         ptype, off, vaddr, paddr, filesz, memsz, perm, align = struct.unpack_from(
             endian+'IIIIIIII', blob, phoff+n*phentsize)
-        if ptype != 1:
+        if ptype != 1:  # PT_LOAD only
             continue
         _check_region(blob, off, filesz, f'LOAD segment {n}')
         if memsz < filesz or vaddr + memsz > 0x100000000:

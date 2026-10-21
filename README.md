@@ -50,6 +50,8 @@ are research-only and do not provide runtime-equivalent MIPS or PS2 patches.
 - A string occurrence is not evidence that the feature is reachable.
 - A static xref is only a candidate until verified in disassembly and execution.
 - The MIPS scanner does not follow `$gp`-relative or all EE/R5900 instructions.
+  It now conservatively stops when unmodeled instructions may overwrite
+  pointer registers, trading completeness for fewer false matches.
 - The ARM/DS and PS2 games differ in architecture, hardware, code and engine.
 - Unit tests use synthetic ELF/ISO/ARM9 fixtures, **not the retail executable**.
 - Optional Capstone and Unicorn packages are NOT required and are NOT yet wired

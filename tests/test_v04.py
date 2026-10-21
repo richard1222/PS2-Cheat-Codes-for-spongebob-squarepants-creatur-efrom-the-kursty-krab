@@ -64,8 +64,8 @@ class ARMContextTests(unittest.TestCase):
         self.assertEqual(x['target'],'0x00000108')
     def test_literal_and_nearby_call(self):
         b=bytearray(100)
-        struct.pack_into('<I',b,0,0xE59F0008)
-        struct.pack_into('<I',b,8,0xEB000001)
+        struct.pack_into('<I',b,0,0xE59F0008) # LDR r0,[PC,8] reads slot 0x10
+        struct.pack_into('<I',b,8,0xEB000001) # BL ... nearby
         struct.pack_into('<I',b,16,0x02000050)
         b[80:93]=b'DEBUG OPTIONS'
         r=context(bytes(b),0x02000000,('DEBUG OPTIONS',),radius=3)
@@ -76,6 +76,8 @@ class ARMContextTests(unittest.TestCase):
     def test_no_nearby_calls_claimed(self):
         r=context(b'HELLO\0',0,('HELLO',))
         self.assertEqual(r['entries'][0]['candidate_ldr_xrefs'],[])
+
+if __name__=='__main__':unittest.main()
 
 class OptionalLLVMTests(unittest.TestCase):
     @unittest.skipUnless(__import__('shutil').which('clang') and __import__('shutil').which('llvm-objdump'),
@@ -92,5 +94,3 @@ class OptionalLLVMTests(unittest.TestCase):
     def test_window_bounds_rejected(self):
         from arm9_llvm_disasm import disassemble
         with self.assertRaises(ValueError):disassemble(b'1234',0x02000000,0,200)
-
-if __name__=='__main__':unittest.main()
