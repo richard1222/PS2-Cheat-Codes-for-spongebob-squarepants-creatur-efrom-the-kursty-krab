@@ -364,6 +364,36 @@ The .ps2 files contain level data, models, and textures. File naming follows the
 - Repacking not supported by QuickBMS (size limitations)
 - Would need custom tooling for reimport
 
+
+---
+
+## Executable Analysis (SLUS_213.91)
+
+### Debug Strings Found
+- minfps - Minimum FPS debug flag
+- showfps - Show FPS debug flag
+- Variable Colon Aligned Timer - Timer display
+- Various timer sound files (s_timer_ping_*.wav)
+
+### Floating Point Constants
+- 30.0 (IEEE 754): 7 occurrences
+- 60.0 (IEEE 754): 10 occurrences
+- These may be frame rate related or game constants
+
+### 60 FPS Investigation
+- No known 60 FPS patch for real hardware
+- Game runs at 30 FPS natively
+- PCSX2 can run at 60 FPS with emulator patches
+- Would require deeper reverse engineering to find frame limiter
+- The "minfps" and "showfps" debug flags suggest FPS monitoring exists
+
+### Modding Difficulty
+- ALLPAKS.PS2 is a single proprietary archive
+- Not HIP/HOP format (unlike BFBB)
+- QuickBMS blitz_games.bms script can extract
+- Reimporting has size limitations
+- Would need custom tooling for full mod support
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
