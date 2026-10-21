@@ -1,62 +1,76 @@
 #!/usr/bin/env python3
-"""v0.3 fail-closed wrapper for the research-only A32 to MIPS converter.
+"""Fail-closed A32->MIPS translation gate for *pure* register/control-flow blocks.
 
-Only pure register/basic-control-flow blocks are permitted. The output does NOT
-implement the DS/PS2 memory map, ABI, system calls, engine or original menu.
+Back-end is the limited research translator from v0.2. v0.3 explicitly blocks
+memory operations, DS peripherals, and ambiguous CMP flag flow. Generated
+assembly is NOT ABI-compatible PS2 code and must never be patched into an ISO.
 """
-import argparse,json,sys
+from __future__ import annotations
+import argparse
+import json
+import sys
 from pathlib import Path
-from arm_binary_to_mips import inspect,generate
-U32=0xffffffff
+from arm_binary_to_mips import inspect, generate
+
+U32=0xFFFFFFFF
 
 def analyze_block(inst):
-    errors=[];constants={}
+    errors=[]
+    constants={}  # register -> known constant; linear diagnostic only
     for n,i in enumerate(inst):
         op=i.mnemonic
         if not i.supported:
             errors.append(f'0x{i.address:08X}: {i.reason}')
-            constants.clear();continue
+            constants.clear()
+            continue
         if op in ('LDR','STR'):
-            rd,rn,delta=i.operands
-            if rn in constants:
-                addr=(constants[rn]+delta)&U32
-                mmio=' (Nintendo DS MMIO / hardware)' if 0x04000000<=addr<0x05000000 else ''
-                errors.append(f'0x{i.address:08X}: {op} accesses 0x{addr:08X}{mmio}; PS2 mapping not defined')
+            rd,rn,displacement=i.operands
+            base=constants.get(rn)
+            if base is not None:
+                addr=(base+displacement)&U32
+                label=' (Nintendo DS hardware / MMIO region)' if 0x04000000<=addr<0x05000000 else ''
+                errors.append(f'0x{i.address:08X}: {op} accesses 0x{addr:08X}{label}; PS2 memory mapping not defined')
             else:
-                errors.append(f'0x{i.address:08X}: {op} uses unmapped memory; PS2 mapping not defined')
+                errors.append(f'0x{i.address:08X}: {op} uses an unmapped memory address; PS2 memory mapping not defined')
             if op=='LDR':constants.pop(rd,None)
             continue
         if op in ('MOV','ADD','SUB','AND','EOR','ORR','CMP'):
             rn,rd,rhs=i.operands
-            rhs_val=rhs[1] if rhs[0]=='imm' else constants.get(rhs[1])
-            if op=='CMP':continue
-            if op=='MOV':value=rhs_val
+            if rhs[0]=='imm': rhs_known=rhs[1]
+            else:rhs_known=constants.get(rhs[1])
+            if op=='MOV': val=rhs_known
+            elif op=='CMP':continue
             else:
                 lhs=constants.get(rn)
-                if lhs is None or rhs_val is None:value=None
-                elif op=='ADD':value=(lhs+rhs_val)&U32
-                elif op=='SUB':value=(lhs-rhs_val)&U32
-                elif op=='AND':value=lhs&rhs_val
-                elif op=='ORR':value=lhs|rhs_val
-                else:value=lhs^rhs_val
-            if value is None:constants.pop(rd,None)
-            else:constants[rd]=value
+                if lhs is None or rhs_known is None:val=None
+                elif op=='ADD':val=(lhs+rhs_known)&U32
+                elif op=='SUB':val=(lhs-rhs_known)&U32
+                elif op=='AND':val=lhs&rhs_known
+                elif op=='ORR':val=lhs|rhs_known
+                else:val=lhs^rhs_known
+            if val is None:constants.pop(rd,None)
+            else:constants[rd]=val
             continue
         if op in ('BEQ','BNE'):
             if n==0 or inst[n-1].mnemonic!='CMP':
-                errors.append(f'0x{i.address:08X}: conditional branch lacks immediately preceding CMP; flag lifetime unknown')
-            constants.clear()
-        elif op in ('B','BX'):constants.clear()
+                errors.append(f'0x{i.address:08X}: conditional branch not directly after CMP; flag lifetime not established')
+            constants.clear() # control-flow merge: assume unknown
+        elif op=='B':constants.clear()
+        elif op=='BX':constants.clear()
     return errors
 
-def translate_safe(blob,base,offset,count):
+
+def translate_safe(blob:bytes,base:int,offset:int,count:int):
     inst=inspect(blob,base,offset,count)
-    errors=analyze_block(inst)
-    if errors:return None,{'status':'blocked','reasons':errors,'instructions':[i.to_dict() for i in inst]}
-    try:asm=generate(inst)
+    reasons=analyze_block(inst)
+    if reasons:
+        return None, {'status':'blocked','reasons':reasons,'instructions':[i.to_dict() for i in inst]}
+    try:
+        asm=generate(inst)
     except ValueError as e:
-        return None,{'status':'blocked','reasons':[str(e)],'instructions':[i.to_dict() for i in inst]}
-    return asm,{'status':'generated_research_only','reasons':[],'instructions':[i.to_dict() for i in inst]}
+        return None, {'status':'blocked','reasons':[str(e)],'instructions':[i.to_dict() for i in inst]}
+    return asm, {'status':'generated_research_only','reasons':[], 'instructions':[i.to_dict() for i in inst]}
+
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
@@ -76,4 +90,5 @@ def main():
     if a.out:a.out.write_text(asm)
     else:print(asm,end='')
     return 0
+
 if __name__=='__main__':raise SystemExit(main())
