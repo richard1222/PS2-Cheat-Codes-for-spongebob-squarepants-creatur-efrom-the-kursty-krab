@@ -22,6 +22,12 @@ Cheat codes and research for **SpongeBob SquarePants: Creature from the Krusty K
 - [Cancelled Ports](#cancelled-ports)
 - [DS Source Code](#ds-source-code)
 - [Gun Mechanic (Cut)](#gun-mechanic-cut)
+- [ALLPAKS.PS2 Extraction](#allpakspacks2-extraction)
+- [ALLPAKS Deep Analysis](#allpakspacks2-deep-analysis)
+- [Executable Analysis](#executable-analysis-slus_21391)
+- [Restoration Possibilities](#restoration-possibilities)
+- [Debug Menu Investigation](#debug-menu-investigation)
+- [Debug Menu Deep Dive](#debug-menu-deep-dive)
 - [Resources](#resources)
 
 ---
@@ -42,7 +48,7 @@ Cheat codes and research for **SpongeBob SquarePants: Creature from the Krusty K
 
 ## In-Game Cheat Codes
 
-Enter these codes at the **Extras → Enter Codes** menu. Then activate bonuses at **Extras → Activate Bonus Items**.
+Enter these codes at the **Extras -> Enter Codes** menu. Then activate bonuses at **Extras -> Activate Bonus Items**.
 
 ### 30,000 Z Coins
 
@@ -193,12 +199,12 @@ The PS2 version uses a different file format than Battle for Bikini Bottom:
 
 ```
 ISO Root
-├── SLUS_213.91        (Main executable, 4.5 MB)
-├── SYSTEM.CNF         (Boot config)
-├── ALLPAKS.PS2        (All game data, 835.89 MB)
-├── AUDIOPS2/          (Audio files)
-├── VIDEOPS2/          (Video files)
-└── MODULES/           (PS2 modules)
++-- SLUS_213.91        (Main executable, 4.5 MB)
++-- SYSTEM.CNF         (Boot config)
++-- ALLPAKS.PS2        (All game data, 835.89 MB)
++-- AUDIOPS2/          (Audio files)
++-- VIDEOPS2/          (Video files)
++-- MODULES/           (PS2 modules)
 ```
 
 - **ALLPAKS.PS2**: Single large archive containing all level data, models, textures
@@ -254,16 +260,13 @@ The game originally had a **gun mechanic** that was cut due to Nickelodeon's con
 
 ---
 
-
----
-
 ## ALLPAKS.PS2 Extraction
 
-The ALLPAKS.PS2 file can be extracted using **QuickBMS** with the litz_games.bms script:
+The ALLPAKS.PS2 file can be extracted using **QuickBMS** with the `blitz_games.bms` script:
 
 1. Download [QuickBMS](https://aluigi.altervista.org/quickbms.htm)
 2. Download [blitz_games.bms](https://aluigi.altervista.org/quickbms_list.php) (search for "Blitz Games")
-3. Run: quickbms blitz_games.bms ALLPAKS.PS2 output_folder/
+3. Run: `quickbms blitz_games.bms ALLPAKS.PS2 output_folder/`
 
 ### Extraction Notes
 - The script extracts all files from the ALLPAKS archive
@@ -276,21 +279,20 @@ The ALLPAKS.PS2 file can be extracted using **QuickBMS** with the litz_games.bm
 - [QuickBMS Scripts List](https://aluigi.altervista.org/quickbms_list.php)
 - [ZenHAX Forum](https://zenhax.com/) - Community support
 
-
 ---
 
 ## ALLPAKS.PS2 Extraction Results
 
-The ALLPAKS.PS2 file was successfully extracted using QuickBMS with the litz_games.bms script. **672 files** were extracted.
+The ALLPAKS.PS2 file was successfully extracted using QuickBMS with the `blitz_games.bms` script. **672 files** were extracted.
 
 ### Interesting Files Found
 
 | File | Description |
 |---|---|
-| onuspak_plankton gangster.ps2 | Unused 1930's mobster costume for Plankton |
-| debugpackage.ps2 | Debug package (possibly contains debug tools) |
-| rontend_devpackage.ps2 | Development frontend package |
-| sb 4_0_sbworm0a_cutscene.ps2 | Cutscene file (may contain unused content) |
+| `bonuspak_plankton gangster.ps2` | Unused 1930's mobster costume for Plankton |
+| `debugpackage.ps2` | Debug package (possibly contains debug tools) |
+| `frontend_devpackage.ps2` | Development frontend package |
+| `sb 4_0_sbworm0a_cutscene.ps2` | Cutscene file (may contain unused content) |
 
 ### File Types
 - 669 .ps2 files (level data, models, textures)
@@ -306,12 +308,11 @@ The ALLPAKS.PS2 file was successfully extracted using QuickBMS with the litz_ga
 These bonus paks correspond to the in-game cheat codes (ROCFISH, PILOT, etc.)
 
 ### Extraction Tool
-A Python-based extractor has been created: llpaks_extractor.py
-- Based on the litz_games.bms QuickBMS script
+A Python-based extractor has been created: `allpaks_extractor.py`
+- Based on the `blitz_games.bms` QuickBMS script
 - Extracts all files from ALLPAKS.PS2
 - Generates file list with offsets and sizes
 - No QuickBMS required
-
 
 ---
 
@@ -323,12 +324,13 @@ A Python-based extractor has been created: llpaks_extractor.py
 - Total extracted size: ~558 MB
 
 ### Key Files Found
+
 | File | Size | Description |
 |---|---|---|
-| onuspak_plankton gangster.ps2 | ~? KB | Unused Plankton gangster costume (confirmed cut content) |
-| debugpackage.ps2 | 38 KB | Debug package |
-| rontend_devpackage.ps2 | 1124 KB | Development frontend package |
-| sb 4_0_sbworm0a_cutscene.ps2 | 2318 KB | Cutscene file |
+| `bonuspak_plankton gangster.ps2` | ~432 KB | Unused Plankton gangster costume (confirmed cut content) |
+| `debugpackage.ps2` | 38 KB | Debug package |
+| `frontend_devpackage.ps2` | 1124 KB | Development frontend package |
+| `sb 4_0_sbworm0a_cutscene.ps2` | 2318 KB | Cutscene file |
 
 ### Bonus Pak Files (44 total)
 All character costumes and vehicle skins that correspond to in-game cheat codes:
@@ -341,10 +343,10 @@ All character costumes and vehicle skins that correspond to in-game cheat codes:
 
 ### Level Files
 The .ps2 files contain level data, models, and textures. File naming follows the pattern:
-- sb X_Y_*.ps2 - SpongeBob level sections
-- ptrk_*.ps2 - Patrick level sections
-- mini-*.ps2 - Mini-game worlds
-- diesel dreaming trans world *.ps2 - Diesel Dreaming transitions
+- `sb X_Y_*.ps2` - SpongeBob level sections
+- `ptrk_*.ps2` - Patrick level sections
+- `mini-*.ps2` - Mini-game worlds
+- `diesel dreaming trans world *.ps2` - Diesel Dreaming transitions
 
 ### File Format Notes
 - .ps2 files are proprietary Blitz Games format
@@ -364,15 +366,14 @@ The .ps2 files contain level data, models, and textures. File naming follows the
 - Repacking not supported by QuickBMS (size limitations)
 - Would need custom tooling for reimport
 
-
 ---
 
 ## Executable Analysis (SLUS_213.91)
 
 ### Debug Strings Found
-- minfps - Minimum FPS debug flag
-- showfps - Show FPS debug flag
-- Variable Colon Aligned Timer - Timer display
+- `minfps` - Minimum FPS debug flag
+- `showfps` - Show FPS debug flag
+- `Variable Colon Aligned Timer` - Timer display
 - Various timer sound files (s_timer_ping_*.wav)
 
 ### Floating Point Constants
@@ -394,33 +395,32 @@ The .ps2 files contain level data, models, and textures. File naming follows the
 - Reimporting has size limitations
 - Would need custom tooling for full mod support
 
-
 ---
 
 ## Restoration Possibilities
 
-### 1. Plankton Gangster Costume ✅ File Exists
-- **File:** onuspak_plankton gangster.ps2 (442,368 bytes)
+### 1. Plankton Gangster Costume - File Exists
+- **File:** `bonuspak_plankton gangster.ps2` (442,368 bytes)
 - **Status:** Confirmed in game files, unused
 - **How to restore:** Would need to enable in game code or modify bonus pak loading
 - **Difficulty:** Medium - requires code modification or file replacement
 
 ### 2. Debug Package
-- **File:** debugpackage.ps2 (38,912 bytes)
+- **File:** `debugpackage.ps2` (38,912 bytes)
 - **Status:** Development debug package
 - **Contents:** Contains font data (arial), references to FilenameTable.pak.sys
 - **How to restore:** May contain debug tools/features
 - **Difficulty:** Unknown - needs further analysis
 
 ### 3. Frontend Dev Package
-- **File:** rontend_devpackage.ps2 (1,150,976 bytes)
+- **File:** `frontend_devpackage.ps2` (1,150,976 bytes)
 - **Status:** Development frontend package
 - **Contents:** Contains development frontend elements
 - **How to restore:** May enable development menu
 - **Difficulty:** Unknown - needs further analysis
 
 ### 4. Unused Cutscene
-- **File:** sb 4_0_sbworm0a_cutscene.ps2 (2,318 KB)
+- **File:** `sb 4_0_sbworm0a_cutscene.ps2` (2,318 KB)
 - **Status:** Cutscene file for Alaskan Bull Worm level
 - **How to restore:** May contain unused cutscene content
 - **Difficulty:** Medium - needs level editing
@@ -431,8 +431,8 @@ The .ps2 files contain level data, models, and textures. File naming follows the
 - **Difficulty:** High - requires executable analysis
 
 ### Tools for Restoration
-- **QuickBMS** + litz_games.bms - Extract ALLPAKS.PS2
-- **Python extractor** - llpaks_extractor.py (included in repo)
+- **QuickBMS** + `blitz_games.bms` - Extract ALLPAKS.PS2
+- **Python extractor** - `allpaks_extractor.py` (included in repo)
 - **Hex editor** - For binary analysis
 - **PCSX2** - For testing modifications
 
@@ -441,36 +441,6 @@ The .ps2 files contain level data, models, and textures. File naming follows the
 - Repacking not supported by QuickBMS (size limitations)
 - Would need custom tooling for reimport
 - PS2 executable (SLUS_213.91) is 4.5 MB - needs reverse engineering for code patches
-
-
----
-
-## New Goal: Debug Menu
-
-### Objective
-Create a debug menu for SpongeBob: Creature from the Krusty Krab (PS2) that can be activated in-game.
-
-### Approach
-1. **Analyze the debugpackage.ps2 file** - may contain debug tools/features
-2. **Search the executable** for debug mode flags and activation codes
-3. **Examine the frontend_devpackage.ps2** - may contain development menu elements
-4. **Look for debug strings** in SLUS_213.91
-
-### Potential Methods
-- Find debug mode toggle in the executable
-- Enable via code patches (like PS3MAPI on PS3)
-- Modify game data to unlock debug features
-- Use the debugpackage.ps2 file contents
-
-### Files to Investigate
-- debugpackage.ps2 (38,912 bytes) - Debug package
-- rontend_devpackage.ps2 (1,150,976 bytes) - Dev frontend
-- SLUS_213.91 (4.5 MB) - Main executable
-- ALLPAKS.PS2 (835.89 MB) - Game data archive
-
-### Status
-🔄 In Progress - Investigating debug features
-
 
 ---
 
@@ -482,37 +452,36 @@ The following debug flags were found in the executable:
 
 | Flag | Description |
 |---|---|
-| debugswapsticks | Swap control sticks |
-| debuginvertxaxis | Invert X axis |
-| debuginvertyaxis | Invert Y axis |
-| debugcampcinput | Debug camera PC input |
-| debugpad | Debug pad |
-| debugfont | Debug font |
-| DebugPackage | Debug package (file exists in ALLPAKS) |
-| debugCamera | Debug camera |
-| DebugMessageEcho | Debug message echo |
-| aDebugEcho | Debug echo |
-| Free Camera | Free camera mode |
-| CFFlyAroundCamera | Fly around camera |
-| 
-odebugoutput | No debug output |
-| BONUS_UNLOCK_COSTUME_05_NOCODE | Costume 5 unlock (no code) |
-| BONUS_UNLOCK_COSTUME_01 | Costume 1 unlock |
-| BONUS_UNLOCK_ALL_DONE | All bonuses unlocked |
+| `debugswapsticks` | Swap control sticks |
+| `debuginvertxaxis` | Invert X axis |
+| `debuginvertyaxis` | Invert Y axis |
+| `debugcampcinput` | Debug camera PC input |
+| `debugpad` | Debug pad |
+| `debugfont` | Debug font |
+| `DebugPackage` | Debug package (file exists in ALLPAKS) |
+| `debugCamera` | Debug camera |
+| `DebugMessageEcho` | Debug message echo |
+| `faDebugEcho` | Debug echo |
+| `Free Camera` | Free camera mode |
+| `CFFlyAroundCamera` | Fly around camera |
+| `nodebugoutput` | No debug output |
+| `BONUS_UNLOCK_COSTUME_05_NOCODE` | Costume 5 unlock (no code) |
+| `BONUS_UNLOCK_COSTUME_01` | Costume 1 unlock |
+| `BONUS_UNLOCK_ALL_DONE` | All bonuses unlocked |
 
 ### Debug Files Found in ALLPAKS
 
 | File | Size | Description |
 |---|---|---|
-| debugpackage.ps2 | 38,912 bytes | Debug package (contains font data) |
-| rontend_devpackage.ps2 | 1,150,976 bytes | Development frontend package |
+| `debugpackage.ps2` | 38,912 bytes | Debug package (contains font data) |
+| `frontend_devpackage.ps2` | 1,150,976 bytes | Development frontend package |
 
 ### Debug Activation Method
 
 The debug flags appear to be command-line arguments or config-based. The format in the executable is:
-`
+```
 abbreviation.....fullname....
-`
+```
 
 Each flag has a 2-letter abbreviation followed by the full name. These may be activated by:
 1. A specific button combination at boot
@@ -521,26 +490,7 @@ Each flag has a 2-letter abbreviation followed by the full name. These may be ac
 4. Memory address manipulation at runtime
 
 ### Status
-🔄 In Progress - Investigating activation method
-
-
----
-
-## Note on "Muse" Findings
-
-The "muse" findings referenced in some conversations are from the **Manhunt 2** project, not Krusty Krab. They relate to:
-- Manhunt 2's PMLC container format
-- Entity layer (ENTINST.BIN) decoding
-- Model grafting research
-
-These are **not applicable** to Krusty Krab, which uses a completely different engine (Blitz Games vs Rockstar's engine) and file format (ALLPAKS.PS2 vs PMLC/ENTINST).
-
-The Krusty Krab research is independent and focuses on:
-- ALLPAKS.PS2 extraction (Blitz Games format)
-- In-game cheat codes
-- Cut content identification
-- Debug menu investigation
-
+In Progress - Investigating activation method
 
 ---
 
@@ -549,50 +499,45 @@ The Krusty Krab research is independent and focuses on:
 ### Debug Flag Format
 
 The executable contains debug flags in the format:
-`
+```
 abbreviation.....fullname....
-`
+```
 
 Each flag has a 2-letter abbreviation followed by dots and the full name. Found flags:
 
 | Abbrev | Full Name | Description |
 |---|---|---|
-| z | zdepth | Z-depth debug |
-| df | dispflags | Display flags |
-| pspclip | pspclipping | PSP clipping |
-| hs | heapsize | Heap size |
-| if | initflags | Init flags |
-|  | ps | FPS display |
-| m | minfps | Min FPS |
-| ml | managelights | Manage lights |
-| pal | palmode | PAL mode |
-| dcss | debugswapsticks | Swap control sticks |
-| dcix | debuginvertxaxis | Invert X axis |
-| dciy | debuginvertyaxis | Invert Y axis |
-| dcpc | debugcampcinput | Debug camera PC input |
-| dp | debugpad | Debug pad |
-| sf | showfps | Show FPS |
-| sh | showheap | Show heap |
-| ss | showsafeframe | Show safe frame |
-| pool | pooling | Pooling |
-| s | ullscreen | Fullscreen |
-| l | erboselevel | Verbose level |
-| r | erboseresources | Verbose resources |
-| pw | parentwindow | Parent window |
-| 
-w | 
-otifywindow | Notify window |
-| dpx | dispx | Display X |
-| dpy | dispy | Display Y |
-| 
-c | usenetcomms | Use net comms |
-| 
-wb | 
-owinborder | No window border |
-| 2d | erts2d | 2D vertices |
-| 3d | erts3d | 3D vertices |
-| mgui | mousegui | Mouse GUI |
-| l | esourcelinks | Resource links |
+| `z` | `zdepth` | Z-depth debug |
+| `df` | `dispflags` | Display flags |
+| `pspclip` | `pspclipping` | PSP clipping |
+| `hs` | `heapsize` | Heap size |
+| `if` | `initflags` | Init flags |
+| `f` | `fps` | FPS display |
+| `m` | `minfps` | Min FPS |
+| `ml` | `managelights` | Manage lights |
+| `pal` | `palmode` | PAL mode |
+| `dcss` | `debugswapsticks` | Swap control sticks |
+| `dcix` | `debuginvertxaxis` | Invert X axis |
+| `dciy` | `debuginvertyaxis` | Invert Y axis |
+| `dcpc` | `debugcampcinput` | Debug camera PC input |
+| `dp` | `debugpad` | Debug pad |
+| `sf` | `showfps` | Show FPS |
+| `sh` | `showheap` | Show heap |
+| `ss` | `showsafeframe` | Show safe frame |
+| `pool` | `pooling` | Pooling |
+| `fs` | `fullscreen` | Fullscreen |
+| `vl` | `verboselevel` | Verbose level |
+| `vr` | `verboseresources` | Verbose resources |
+| `pw` | `parentwindow` | Parent window |
+| `nw` | `notifywindow` | Notify window |
+| `dpx` | `dispx` | Display X |
+| `dpy` | `dispy` | Display Y |
+| `nc` | `usenetcomms` | Use net comms |
+| `nwb` | `nowinborder` | No window border |
+| `v2d` | `verts2d` | 2D vertices |
+| `v3d` | `verts3d` | 3D vertices |
+| `mgui` | `mousegui` | Mouse GUI |
+| `rl` | `resourcelinks` | Resource links |
 
 ### Debug Activation Method
 
@@ -602,27 +547,29 @@ The debug flags are likely activated by:
 3. **Memory patches** - runtime modification
 4. **Button combination** - at boot or in-game
 
-The debugpad and showfps flags suggest a debug overlay can be enabled.
+The `debugpad` and `showfps` flags suggest a debug overlay can be enabled.
 
 ### Debug Files
-- debugpackage.ps2 - Contains font data (arial), debug package
-- rontend_devpackage.ps2 - Development frontend package
-- DebugPackage - Referenced in executable as loadable asset
+- `debugpackage.ps2` - Contains font data (arial), debug package
+- `frontend_devpackage.ps2` - Development frontend package
+- `DebugPackage` - Referenced in executable as loadable asset
 
 ### BONUS_UNLOCK Strings
-- BONUS_UNLOCK_COSTUME_05_NOCODE - Costume 5 unlock (no code required)
-- BONUS_UNLOCK_COSTUME_01 - Costume 1 unlock
-- BONUS_UNLOCK_ALL_DONE - All bonuses unlocked
+- `BONUS_UNLOCK_COSTUME_05_NOCODE` - Costume 5 unlock (no code required)
+- `BONUS_UNLOCK_COSTUME_01` - Costume 1 unlock
+- `BONUS_UNLOCK_ALL_DONE` - All bonuses unlocked
 
 These suggest hidden unlock mechanisms in the game.
 
 ### Free Camera
-- Free Camera and CFFlyAroundCamera strings found
-- debugCamera flag exists
+- `Free Camera` and `CFFlyAroundCamera` strings found
+- `debugCamera` flag exists
 - Could enable a free camera mode for exploration
 
 ### Status
-🔄 In Progress - Investigating activation method
+In Progress - Investigating activation method
+
+---
 
 ## Resources
 
