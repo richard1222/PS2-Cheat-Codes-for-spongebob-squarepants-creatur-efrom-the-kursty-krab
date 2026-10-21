@@ -41,7 +41,7 @@ def decode(word,addr):
         rm=word&15
         return Instruction(addr,word,'BX',('lr',)) if rm==14 else err(addr,word,'BX other than lr unsupported')
     if ((word>>25)&7)==5:
-        if (word>>24)&1: return err(addr,word,'BL and calls unsupported')
+        if (word>>24)&1: return err(addr,word,'BL and function calls not supported')
         if cond not in (0,1,14): return err(addr,word,'unsupported conditional branch')
         imm24=word&0xffffff
         offset=(imm24<<8)&U32
