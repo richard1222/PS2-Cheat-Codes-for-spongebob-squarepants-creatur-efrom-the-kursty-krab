@@ -541,6 +541,89 @@ The Krusty Krab research is independent and focuses on:
 - Cut content identification
 - Debug menu investigation
 
+
+---
+
+## Debug Menu Deep Dive
+
+### Debug Flag Format
+
+The executable contains debug flags in the format:
+`
+abbreviation.....fullname....
+`
+
+Each flag has a 2-letter abbreviation followed by dots and the full name. Found flags:
+
+| Abbrev | Full Name | Description |
+|---|---|---|
+| z | zdepth | Z-depth debug |
+| df | dispflags | Display flags |
+| pspclip | pspclipping | PSP clipping |
+| hs | heapsize | Heap size |
+| if | initflags | Init flags |
+|  | ps | FPS display |
+| m | minfps | Min FPS |
+| ml | managelights | Manage lights |
+| pal | palmode | PAL mode |
+| dcss | debugswapsticks | Swap control sticks |
+| dcix | debuginvertxaxis | Invert X axis |
+| dciy | debuginvertyaxis | Invert Y axis |
+| dcpc | debugcampcinput | Debug camera PC input |
+| dp | debugpad | Debug pad |
+| sf | showfps | Show FPS |
+| sh | showheap | Show heap |
+| ss | showsafeframe | Show safe frame |
+| pool | pooling | Pooling |
+| s | ullscreen | Fullscreen |
+| l | erboselevel | Verbose level |
+| r | erboseresources | Verbose resources |
+| pw | parentwindow | Parent window |
+| 
+w | 
+otifywindow | Notify window |
+| dpx | dispx | Display X |
+| dpy | dispy | Display Y |
+| 
+c | usenetcomms | Use net comms |
+| 
+wb | 
+owinborder | No window border |
+| 2d | erts2d | 2D vertices |
+| 3d | erts3d | 3D vertices |
+| mgui | mousegui | Mouse GUI |
+| l | esourcelinks | Resource links |
+
+### Debug Activation Method
+
+The debug flags are likely activated by:
+1. **Command-line arguments** - passed to the ELF at boot
+2. **Config file** - on the disc or in game data
+3. **Memory patches** - runtime modification
+4. **Button combination** - at boot or in-game
+
+The debugpad and showfps flags suggest a debug overlay can be enabled.
+
+### Debug Files
+- debugpackage.ps2 - Contains font data (arial), debug package
+- rontend_devpackage.ps2 - Development frontend package
+- DebugPackage - Referenced in executable as loadable asset
+
+### BONUS_UNLOCK Strings
+- BONUS_UNLOCK_COSTUME_05_NOCODE - Costume 5 unlock (no code required)
+- BONUS_UNLOCK_COSTUME_01 - Costume 1 unlock
+- BONUS_UNLOCK_ALL_DONE - All bonuses unlocked
+
+These suggest hidden unlock mechanisms in the game.
+
+### Free Camera
+- Free Camera and CFFlyAroundCamera strings found
+- debugCamera flag exists
+- Could enable a free camera mode for exploration
+
+### Status
+🔄 In Progress - Investigating activation method
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
