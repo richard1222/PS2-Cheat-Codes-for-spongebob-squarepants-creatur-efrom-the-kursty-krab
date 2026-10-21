@@ -780,6 +780,21 @@ Located at file offset 0x414890 (virtual address 0x513890):
 ### Conclusion
 The debug flags exist in the executable but the activation method is not yet determined. The debug flags are stored in a table and their default values are in a config table. Further investigation needed.
 
+
+### Activation Attempt 2: Memory Patching (nodebugoutput)
+
+Modified the executable to patch debug flags:
+- Changed 
+odebugoutput string to xodebugoutput (disabling the "no debug output" flag)
+- Changed initflags from 516 (0x204) to 527 (0x20F) - adding bits 0-3
+- Changed debuginvertxaxis from 0 to 1
+- Changed debuginvertyaxis from 0 to 1
+
+### Test ISO
+- **File:** CftKK_Debug.iso (on desktop)
+- **Changes:** nodebugoutput string + initflags + debug axis flags
+- **Status:** Needs hardware testing
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
