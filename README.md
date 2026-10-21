@@ -733,6 +733,53 @@ Alternative approaches:
 3. Look for a button combination
 4. Try loading debugpackage.ps2
 
+
+---
+
+## Debug Menu - Final Findings
+
+### Debug Flag Table Location
+- **File offset:** 0x429C30 (virtual address 0x528C30)
+- **Format:** Pairs of (abbreviation, full name) as null-terminated strings
+- **Total entries:** 57+ debug flags
+
+### Debug Flag Default Values
+Located at file offset 0x414890 (virtual address 0x513890):
+- Table format: [value, abbrev_ptr, name_ptr] (12 bytes per entry)
+- 16 entries total
+
+| Flag | Default | Description |
+|---|---|---|
+| fps | 60 | Target frame rate |
+| minfps | 30 | Minimum frame rate |
+| debugswapsticks | 1 | Already enabled |
+| debuginvertxaxis | 0 | Invert X axis |
+| debuginvertyaxis | 0 | Invert Y axis |
+
+### Debug Activation Status
+- SYSTEM.CNF modification: FAILED
+- initflags patch (0x204 to 0x205): FAILED
+- Memory patching: In progress
+- Button combination: Not found
+
+### Alternative Debug Methods
+1. **Loading debugpackage.ps2** - May enable debug features when loaded
+2. **Memory manipulation** - Patch specific debug flags at runtime
+3. **Config file** - Look for a debug config mechanism
+
+### BONUS_UNLOCK Strings
+- BONUS_UNLOCK_COSTUME_05_NOCODE - Costume 5 unlock (no code)
+- BONUS_UNLOCK_COSTUME_01 - Costume 1 unlock
+- BONUS_UNLOCK_ALL_DONE - All bonuses unlocked
+
+### Free Camera
+- Free Camera and CFFlyAroundCamera strings found
+- debugCamera flag exists
+- Could enable free camera mode
+
+### Conclusion
+The debug flags exist in the executable but the activation method is not yet determined. The debug flags are stored in a table and their default values are in a config table. Further investigation needed.
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
