@@ -1,6 +1,6 @@
-# SpongeBob Creature from the Krusty Krab — Research Toolkit v1.0.0
+# SpongeBob Creature from the Krusty Krab — Research Toolkit v1.1.0
 
-**v1.0.0 is a stable read-only research toolkit**, not a PS2 debug ISO, a patcher,
+**v1.1.0 is a stable read-only research toolkit**, not a PS2 debug ISO, a patcher,
 or a complete ARM-to-MIPS translator. It cannot activate debug features without
 verified game-specific reverse engineering.
 

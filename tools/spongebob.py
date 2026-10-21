@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SpongeBob research toolkit v1.0: read-only PS2 and DS analysis CLI.
+"""SpongeBob research toolkit v1.1: read-only PS2 and DS analysis CLI.
 
 This is not a retail-game patcher, ARM-to-MIPS engine port, or debug ISO builder.
 """
@@ -17,7 +17,7 @@ from ps2_elf_audit import ElfError, audit
 from ps2_iso_probe import ISOError, inspect_iso
 from ps2_mips_string_xrefs import analyze
 
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 MAX_ELF = 64 * 1024 * 1024
 MAX_ARM = 32 * 1024 * 1024
 

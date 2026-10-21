@@ -1,4 +1,4 @@
-name: Publish SpongeBob Toolkit v1.0.0
+name: Publish SpongeBob Toolkit v1.1.0
 
 on:
   push:
@@ -32,44 +32,44 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python tools/build_release.py "$RUNNER_TEMP/spongebob-toolkit-v1.0.0.zip"
+          python tools/build_release.py "$RUNNER_TEMP/spongebob-toolkit-v1.1.0.zip"
           python - <<'PY'
           import hashlib, os, zipfile
-          archive = os.path.join(os.environ['RUNNER_TEMP'], 'spongebob-toolkit-v1.0.0.zip')
+          archive = os.path.join(os.environ['RUNNER_TEMP'], 'spongebob-toolkit-v1.1.0.zip')
           with zipfile.ZipFile(archive) as z:
               names = z.namelist()
               assert len(names) == 22 and len(names) == len(set(names)), names
-              assert all(n.startswith('spongebob-toolkit-v1.0.0/') for n in names)
-              manifest = z.read('spongebob-toolkit-v1.0.0/MANIFEST.sha256').decode('ascii')
+              assert all(n.startswith('spongebob-toolkit-v1.1.0/') for n in names)
+              manifest = z.read('spongebob-toolkit-v1.1.0/MANIFEST.sha256').decode('ascii')
               for row in manifest.splitlines():
                   digest, name = row.split('  ', 1)
-                  data = z.read('spongebob-toolkit-v1.0.0/' + name)
+                  data = z.read('spongebob-toolkit-v1.1.0/' + name)
                   assert hashlib.sha256(data).hexdigest() == digest, name
           print('Manifest and archive contents validated')
           PY
-          sha256sum "$RUNNER_TEMP/spongebob-toolkit-v1.0.0.zip"
+          sha256sum "$RUNNER_TEMP/spongebob-toolkit-v1.1.0.zip"
 
       - name: Check fresh-extracted source tests
         shell: bash
         run: |
           set -euo pipefail
           mkdir "$RUNNER_TEMP/unpacked"
-          python -m zipfile -e "$RUNNER_TEMP/spongebob-toolkit-v1.0.0.zip" "$RUNNER_TEMP/unpacked"
-          cd "$RUNNER_TEMP/unpacked/spongebob-toolkit-v1.0.0"
+          python -m zipfile -e "$RUNNER_TEMP/spongebob-toolkit-v1.1.0.zip" "$RUNNER_TEMP/unpacked"
+          cd "$RUNNER_TEMP/unpacked/spongebob-toolkit-v1.1.0"
           PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -q
 
-      - name: Create v1.0.0 tag, GitHub Release, and ZIP asset
+      - name: Create v1.1.0 tag, GitHub Release, and ZIP asset
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if gh release view v1.0.0 >/dev/null 2>&1; then
-            echo 'v1.0.0 release already exists; refusing to replace published assets.'
+          if gh release view v1.1.0 >/dev/null 2>&1; then
+            echo 'v1.1.0 release already exists; refusing to replace published assets.'
             exit 0
           fi
-          gh release create v1.0.0 "$RUNNER_TEMP/spongebob-toolkit-v1.0.0.zip" \
-            --title "SpongeBob Research Toolkit v1.0.0" \
+          gh release create v1.1.0 "$RUNNER_TEMP/spongebob-toolkit-v1.1.0.zip" \
+            --title "SpongeBob Research Toolkit v1.1.0" \
             --notes-file RELEASE_NOTES.md \
             --target "$GITHUB_SHA" \
             --latest

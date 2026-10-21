@@ -1,10 +1,16 @@
-# Version 1.0.0 — research toolkit release
+# Version 1.1.0 — research toolkit release
 
 **Date:** 2026-10-21
 
+## Version update
+
+Supersedes v1.0.0 with the updated toolkit and its existing scanner bug fixes.
+CLI reports, archive names, documentation and release automation now consistently
+identify this release as v1.1.0.
+
 ## Release contract
 
-Version 1.0.0 means a stable, reproducible **read-only command-line research
+Version 1.1.0 means a stable, reproducible **read-only command-line research
 interface**, not a feature-complete SpongeBob PS2 debug ISO. The release is
 useful before any retail PS2 executable is uploaded.
 
@@ -19,7 +25,7 @@ useful before any retail PS2 executable is uploaded.
   allowlist, fixed timestamps, no binaries.
 - Synthetic fixture tests. Run `python -m unittest discover -s tests -v`.
 
-## Pre-release bug fixes
+## Bug fixes included in v1.1.0
 
 - Corrected MIPS string-reference scanning around PS2 SPECIAL2, LL and SC
   register writes, which could otherwise produce false-positive xrefs.

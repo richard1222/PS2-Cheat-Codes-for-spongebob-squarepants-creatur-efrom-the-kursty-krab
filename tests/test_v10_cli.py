@@ -23,7 +23,7 @@ class ToolkitReleaseTests(unittest.TestCase):
     def test_version(self):
         p=self.invoke('--version')
         self.assertEqual(p.returncode,0,p.stderr)
-        self.assertIn('1.0.0',p.stdout)
+        self.assertIn('1.1.0',p.stdout)
 
     def test_help_has_subcommands(self):
         p=self.invoke('--help')
@@ -47,7 +47,7 @@ class ToolkitReleaseTests(unittest.TestCase):
             p=self.invoke('scan-elf',src,'--term','debugpad','--json',out)
             self.assertEqual(p.returncode,0,p.stderr)
             r=json.loads(out.read_text())
-            self.assertEqual(r['toolkit_version'],'1.0.0')
+            self.assertEqual(r['toolkit_version'],'1.1.0')
             self.assertTrue(r['read_only'])
             self.assertEqual(len(r['report']['mips_string_xrefs']['strings'][0]['hits'][0]['references']),1)
             self.assertEqual(src.read_bytes(),original)

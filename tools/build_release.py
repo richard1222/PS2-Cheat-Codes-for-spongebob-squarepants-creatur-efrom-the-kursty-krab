@@ -6,7 +6,7 @@ import hashlib
 from pathlib import Path
 from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
 
-VERSION='1.0.0'
+VERSION='1.1.0'
 ROOT=Path(__file__).resolve().parents[1]
 PACKAGE=f'spongebob-toolkit-v{VERSION}'
 FILES=('README.md','RELEASE_NOTES.md','requirements-optional.txt',
