@@ -276,6 +276,42 @@ The ALLPAKS.PS2 file can be extracted using **QuickBMS** with the litz_games.bm
 - [QuickBMS Scripts List](https://aluigi.altervista.org/quickbms_list.php)
 - [ZenHAX Forum](https://zenhax.com/) - Community support
 
+
+---
+
+## ALLPAKS.PS2 Extraction Results
+
+The ALLPAKS.PS2 file was successfully extracted using QuickBMS with the litz_games.bms script. **672 files** were extracted.
+
+### Interesting Files Found
+
+| File | Description |
+|---|---|
+| onuspak_plankton gangster.ps2 | Unused 1930's mobster costume for Plankton |
+| debugpackage.ps2 | Debug package (possibly contains debug tools) |
+| rontend_devpackage.ps2 | Development frontend package |
+| sb 4_0_sbworm0a_cutscene.ps2 | Cutscene file (may contain unused content) |
+
+### File Types
+- 669 .ps2 files (level data, models, textures)
+- 3 .txt files (file lists)
+- 1 .sys file (FilenameTable.pak.sys)
+
+### Bonus Pak Files
+44 bonus pak files found, including:
+- Character costumes (SpongeBob, Patrick, Plankton, Giant Plankton)
+- Vehicle skins (hot rod, hypnotic car, hovercraft, rocket)
+- Weapon skins (rocket, laser, etc.)
+
+These bonus paks correspond to the in-game cheat codes (ROCFISH, PILOT, etc.)
+
+### Extraction Tool
+A Python-based extractor has been created: llpaks_extractor.py
+- Based on the litz_games.bms QuickBMS script
+- Extracts all files from ALLPAKS.PS2
+- Generates file list with offsets and sizes
+- No QuickBMS required
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
