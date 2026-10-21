@@ -394,6 +394,54 @@ The .ps2 files contain level data, models, and textures. File naming follows the
 - Reimporting has size limitations
 - Would need custom tooling for full mod support
 
+
+---
+
+## Restoration Possibilities
+
+### 1. Plankton Gangster Costume ✅ File Exists
+- **File:** onuspak_plankton gangster.ps2 (442,368 bytes)
+- **Status:** Confirmed in game files, unused
+- **How to restore:** Would need to enable in game code or modify bonus pak loading
+- **Difficulty:** Medium - requires code modification or file replacement
+
+### 2. Debug Package
+- **File:** debugpackage.ps2 (38,912 bytes)
+- **Status:** Development debug package
+- **Contents:** Contains font data (arial), references to FilenameTable.pak.sys
+- **How to restore:** May contain debug tools/features
+- **Difficulty:** Unknown - needs further analysis
+
+### 3. Frontend Dev Package
+- **File:** rontend_devpackage.ps2 (1,150,976 bytes)
+- **Status:** Development frontend package
+- **Contents:** Contains development frontend elements
+- **How to restore:** May enable development menu
+- **Difficulty:** Unknown - needs further analysis
+
+### 4. Unused Cutscene
+- **File:** sb 4_0_sbworm0a_cutscene.ps2 (2,318 KB)
+- **Status:** Cutscene file for Alaskan Bull Worm level
+- **How to restore:** May contain unused cutscene content
+- **Difficulty:** Medium - needs level editing
+
+### 5. Gun Mechanic
+- **Status:** Cut due to Nickelodeon concerns
+- **How to restore:** May exist in game files, needs deep reverse engineering
+- **Difficulty:** High - requires executable analysis
+
+### Tools for Restoration
+- **QuickBMS** + litz_games.bms - Extract ALLPAKS.PS2
+- **Python extractor** - llpaks_extractor.py (included in repo)
+- **Hex editor** - For binary analysis
+- **PCSX2** - For testing modifications
+
+### Limitations
+- ALLPAKS.PS2 is a single archive - no easy file replacement
+- Repacking not supported by QuickBMS (size limitations)
+- Would need custom tooling for reimport
+- PS2 executable (SLUS_213.91) is 4.5 MB - needs reverse engineering for code patches
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
