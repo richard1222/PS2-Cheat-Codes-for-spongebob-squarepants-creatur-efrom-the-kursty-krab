@@ -795,6 +795,44 @@ odebugoutput string to xodebugoutput (disabling the "no debug output" flag)
 - **Changes:** nodebugoutput string + initflags + debug axis flags
 - **Status:** Needs hardware testing
 
+
+### Activation Attempt 3: Memory Patching (nodebugoutput + initflags)
+
+Modified the executable to patch debug flags:
+- Changed 
+odebugoutput string to xodebugoutput (disabling the "no debug output" flag)
+- Changed initflags from 516 (0x204) to 527 (0x20F) - adding bits 0-3
+- Changed debuginvertxaxis from 0 to 1
+- Changed debuginvertyaxis from 0 to 1
+
+### Test ISO
+- **File:** CftKK_Debug.iso (on desktop)
+- **Changes:** nodebugoutput string + initflags + debug axis flags
+- **Status:** FAILED - No debug info appeared
+
+### Alternative Approaches to Try
+1. **Patch the debug flag table directly** - Change showfps, debugpad, etc. defaults from 0 to 1
+2. **Find button combination** - Try common debug button combos at boot
+3. **Load debugpackage.ps2** - Enable the debug package file
+4. **Memory manipulation at runtime** - Use PS2 debug tools to patch flags
+5. **Reverse engineer the ELF** - Find the debug activation code
+
+### BONUS_UNLOCK Strings Analysis
+Found in the executable:
+- BONUS_UNLOCK_COSTUME_05_NOCODE - Costume 5 unlock (no code required)
+- BONUS_UNLOCK_COSTUME_01 - Costume 1 unlock
+- BONUS_UNLOCK_ALL_DONE - All bonuses unlocked
+
+These suggest hidden unlock mechanisms that may be related to debug mode.
+
+### Free Camera Discovery
+- Free Camera and CFFlyAroundCamera strings found
+- debugCamera flag exists
+- Could enable a free camera mode for exploration
+
+### Conclusion
+The debug activation mechanism is not straightforward. The debug flags exist in the executable but their activation method is not yet determined. Further investigation needed.
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
