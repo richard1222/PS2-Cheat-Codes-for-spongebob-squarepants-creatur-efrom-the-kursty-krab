@@ -605,6 +605,52 @@ Alternative approaches:
 3. Memory address manipulation at runtime
 4. Button combination at boot
 
+
+### Debug Flag Table Structure
+
+The debug flags are stored in a table at virtual address 0x528C30 (file offset 0x429C30). The format is:
+`
+[8-byte abbreviation (null-padded)] [null-terminated name (padded to 8-byte boundary)]
+`
+
+Each entry pairs an abbreviation with its full name. The table contains 57+ entries.
+
+### Debug Flag Values (from config table at 0x414890)
+
+| Flag | Default Value | Description |
+|---|---|---|
+| ps | 60 | Target frame rate |
+| minfps | 30 | Minimum frame rate |
+| debugswapsticks | 1 | Swap control sticks (ENABLED by default) |
+| debuginvertxaxis | 0 | Invert X axis |
+| debuginvertyaxis | 0 | Invert Y axis |
+| debugCamera | 0 | Debug camera |
+| showfps | 0 | Show FPS counter |
+| showheap | 0 | Show heap info |
+| showsafeframe | 0 | Show safe frame |
+
+### Activation Attempt: SYSTEM.CNF
+
+Modified SYSTEM.CNF to pass debug flags as command-line arguments:
+`
+BOOT2 = cdrom0:\SLUS_213.91;1 debugpad showfps
+`
+**Result:** No debug info or FPS counter appeared. PS2 may not support command-line args like PSX.
+
+### Alternative Activation Methods to Try
+1. **Memory patching** - Change debug flag defaults in the executable
+2. **Config file** - Look for a debug config file on the disc
+3. **Button combination** - Try common debug button combos at boot
+4. **Loading debugpackage.ps2** - The debug package file exists in ALLPAKS
+
+### Debug Package Analysis
+- debugpackage.ps2 (38,912 bytes) contains font data (arial)
+- References FilenameTable.pak.sys and TagTable.pak.sys
+- May contain debug tools/features when loaded
+
+### Status
+🔄 In Progress - SYSTEM.CNF method failed, investigating alternatives
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
