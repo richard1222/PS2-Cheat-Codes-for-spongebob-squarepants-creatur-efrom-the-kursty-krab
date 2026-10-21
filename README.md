@@ -442,6 +442,35 @@ The .ps2 files contain level data, models, and textures. File naming follows the
 - Would need custom tooling for reimport
 - PS2 executable (SLUS_213.91) is 4.5 MB - needs reverse engineering for code patches
 
+
+---
+
+## New Goal: Debug Menu
+
+### Objective
+Create a debug menu for SpongeBob: Creature from the Krusty Krab (PS2) that can be activated in-game.
+
+### Approach
+1. **Analyze the debugpackage.ps2 file** - may contain debug tools/features
+2. **Search the executable** for debug mode flags and activation codes
+3. **Examine the frontend_devpackage.ps2** - may contain development menu elements
+4. **Look for debug strings** in SLUS_213.91
+
+### Potential Methods
+- Find debug mode toggle in the executable
+- Enable via code patches (like PS3MAPI on PS3)
+- Modify game data to unlock debug features
+- Use the debugpackage.ps2 file contents
+
+### Files to Investigate
+- debugpackage.ps2 (38,912 bytes) - Debug package
+- rontend_devpackage.ps2 (1,150,976 bytes) - Dev frontend
+- SLUS_213.91 (4.5 MB) - Main executable
+- ALLPAKS.PS2 (835.89 MB) - Game data archive
+
+### Status
+🔄 In Progress - Investigating debug features
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
