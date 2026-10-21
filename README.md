@@ -76,3 +76,10 @@ The repository also preserves its original PS2 cheat codes, developer-console
 research and notes in [`docs/PS2_CHEATS_RESEARCH_ARCHIVE.md`](https://github.com/richard1222/PS2-Cheat-Codes-for-spongebob-squarepants-creatur-efrom-the-kursty-krab/blob/main/docs/PS2_CHEATS_RESEARCH_ARCHIVE.md).
 That historical guide is not bundled in this small source-only release ZIP.
 
+
+## Prototype research (development)
+
+`python tools/spongebob.py scan-nds prototype.nds --json prototype-report.json`
+validates the NDS ARM9 extent and runs the existing debug-string/call-context
+analysis directly on the prototype. The input remains unchanged. DS addresses
+are research leads, not PS2 patch offsets.

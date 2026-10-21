@@ -10,7 +10,7 @@ VERSION='1.1.0'
 ROOT=Path(__file__).resolve().parents[1]
 PACKAGE=f'spongebob-toolkit-v{VERSION}'
 FILES=('README.md','RELEASE_NOTES.md','requirements-optional.txt',
-       'tools/spongebob.py','tools/build_release.py',
+       'tools/spongebob.py','tools/build_release.py','tools/nds_probe.py',
        'tools/arm9_call_context.py','tools/arm9_llvm_disasm.py',
        'tools/arm9_string_xrefs.py','tools/arm_binary_to_mips.py',
        'tools/arm_binary_to_mips_v03.py','tools/check_optional_deps.py',
@@ -18,7 +18,7 @@ FILES=('README.md','RELEASE_NOTES.md','requirements-optional.txt',
        'tools/ps2_mips_string_xrefs.py',
        'tests/test_arm9_string_xrefs.py','tests/test_v03_guard.py',
        'tests/test_v04.py','tests/test_v05.py','tests/test_v10_cli.py',
-       'tests/test_v10_release.py','tests/test_v10_bugfixes.py')
+       'tests/test_v10_release.py','tests/test_v10_bugfixes.py','tests/test_nds_probe.py')
 
 def package(target:Path, root:Path=ROOT):
     source={}

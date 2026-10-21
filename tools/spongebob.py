@@ -96,13 +96,26 @@ def build_parser() -> argparse.ArgumentParser:
     a.add_argument('--radius', type=int, default=12)
     a.add_argument('--max-hits', type=int, default=100)
     a.add_argument('--json', type=Path)
+    n = subs.add_parser('scan-nds', help='Read-only NDS prototype ARM9 analysis')
+    n.add_argument('input', type=Path)
+    n.add_argument('--term', dest='terms', action='append')
+    n.add_argument('--radius', type=int, default=12)
+    n.add_argument('--max-hits', type=int, default=100)
+    n.add_argument('--json', type=Path)
     return parser
 
 
 def run(args: argparse.Namespace) -> dict:
     if args.command == 'doctor':
         return doctor()
-    if args.command == 'scan-iso':
+    if args.command == 'scan-nds':
+        from nds_probe import MAX_NDS, inspect_nds
+        from arm9_string_xrefs import DEFAULT_TERMS
+        if not 1 <= args.max_hits <= 10000:
+            raise ToolError('--max-hits must be between 1 and 10000')
+        result = inspect_nds(load_bounded(args.input, MAX_NDS),
+                             args.terms or DEFAULT_TERMS, args.radius, args.max_hits)
+    elif args.command == 'scan-iso':
         result = inspect_iso(args.input, args.boot_name, not args.no_xrefs)
     elif args.command == 'scan-elf':
         if not 1 <= args.max_hits <= 10000:
