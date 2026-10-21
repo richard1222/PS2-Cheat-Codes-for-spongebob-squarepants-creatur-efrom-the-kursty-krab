@@ -123,6 +123,100 @@ CF403E6F 00624E17
 
 ---
 
+
+---
+
+## Cut Content & Unused Assets
+
+### Unused Content Found
+
+| Content | Type | Status | Notes |
+|---|---|---|---|
+| Plankton Gangster Costume | Model/Texture | Unused | 1930's mobster costume, cut because no place to use it |
+| Unused Music Tracks | Audio | Unused | 2 early variations of level themes |
+| Early Title Screen | Texture | Unused | "SpongeBob SquarePants 06" codename |
+| Unused Entrance (Alaskan Belly Trouble) | Level geometry | Unused | Entrance to Inventor's lab, never accessible |
+| Elevator Platform (Starfishman) | Level geometry | Unused | 4 blocked holes that never open |
+| Ten Health Spots | Design | Cut | Reduced to 5 in final |
+| Cel-Shaded Starfishman | Visual | Cut | Outlines removed from Rooftop Rumble |
+| Gun Mechanic | Gameplay | Cut | Removed due to Nickelodeon's concerns |
+| Different Airplane Design | Model | Cut | More boat-like, changed before release |
+| Unused Trailer Cafe "The Kookie Cook" | Level element | Cut | Removed from It Came from Bikini Bottom |
+| Different Giant Plankton Laser Icon | Texture | Cut | Screenshot cutout instead of 2D image |
+| Different Background (Revenge of Giant Plankton) | Level | Cut | More buildings, lighter background |
+| Plankton Bridge Trip Animation | Animation | Cut | Animation doesn't play in final |
+| Xbox Game Save Messages | Text | Leftover | Hint at cancelled Xbox version |
+
+### Unused Audio
+
+- Unused dialogue lines for various characters
+- Early variations of level themes
+- Scrapped invincibility power-up music (from DS version)
+- Scrapped arcade game area music
+- Scrapped Bull Worm-chasing game music
+- Scrapped Laboratory level music
+
+### Prerelease Differences
+
+- Starfishman originally had cel-shaded outlines in Rooftop Rumble
+- Plankton would trip over bridge in It Came from Bikini Bottom
+- SpongeBob's airplane was more boat-like
+- 10 health spots instead of 5
+- Different Snooze Zs counter and fuel counter designs
+- Game was originally called "SB06 - 40 Winks" (dream concept)
+
+### Prototype Builds
+
+33 prototype builds exist on Hidden Palace (May 2006 - August 2006):
+- USA and Europe variants
+- Various revision builds (C/D/E)
+- Build date of retail NTSC-U: August 25, 2006, 14:13:10
+
+---
+
+## 60 FPS
+
+The game runs at **30 FPS** natively. No known 60 FPS patch exists for real hardware.
+
+- PCSX2 can run at 60 FPS with emulator patches
+- No single-site framerate change found in the executable
+- Game logic may be tied to frame rate
+
+---
+
+## File Structure
+
+The PS2 version uses a different file format than Battle for Bikini Bottom:
+
+`
+ISO Root
+├── SLUS_213.91        (Main executable, 4.5 MB)
+├── SYSTEM.CNF         (Boot config)
+├── ALLPAKS.PS2        (All game data, 835.89 MB)
+├── AUDIOPS2/          (Audio files)
+├── VIDEOPS2/          (Video files)
+└── MODULES/           (PS2 modules)
+`
+
+- **ALLPAKS.PS2**: Single large archive containing all level data, models, textures
+- Not HIP/HOP format like BFBB - uses proprietary "PAKS" format
+- Harder to mod than BFBB due to single archive
+
+---
+
+## Hidden Palace Prototypes
+
+33 prototype builds available at [Hidden Palace](http://upload.hiddenpalace.org/Category:SpongeBob_SquarePants:_Creature_from_the_Krusty_Krab_prototypes):
+
+| Date Range | Variants |
+|---|---|
+| May 25, 2006 | Single build |
+| June 8-29, 2006 | USA, Europe |
+| July 5-28, 2006 | USA, Europe |
+| August 3-29, 2006 | USA, Europe, Revision C/D/E |
+
+These prototypes may contain cut content not present in the retail version.
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
