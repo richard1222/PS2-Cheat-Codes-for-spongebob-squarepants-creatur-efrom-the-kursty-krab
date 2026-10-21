@@ -651,6 +651,58 @@ BOOT2 = cdrom0:\SLUS_213.91;1 debugpad showfps
 ### Status
 🔄 In Progress - SYSTEM.CNF method failed, investigating alternatives
 
+
+---
+
+## Debug Activation Investigation
+
+### Debug Flag Table Structure
+
+The debug flags are stored in a table at file offset 0x429C30 (virtual address 0x528C30). The format is:
+`
+[8-byte abbreviation (null-padded)] [null-terminated name (padded to 8-byte boundary)]
+`
+
+Each entry pairs an abbreviation with its full name. The table contains 57+ entries.
+
+### Debug Flag Values (from config table at 0x414890)
+
+| Flag | Default Value | Description |
+|---|---|---|
+| ps | 60 | Target frame rate |
+| minfps | 30 | Minimum frame rate |
+| debugswapsticks | 1 | Swap control sticks (ENABLED by default!) |
+| debuginvertxaxis | 0 | Invert X axis |
+| debuginvertyaxis | 0 | Invert Y axis |
+| debugCamera | 0 | Debug camera |
+| showfps | 0 | Show FPS counter |
+| showheap | 0 | Show heap info |
+| showsafeframe | 0 | Show safe frame |
+
+### Activation Attempt 1: SYSTEM.CNF
+
+Modified SYSTEM.CNF to pass debug flags as command-line arguments:
+`
+BOOT2 = cdrom0:\SLUS_213.91;1 debugpad showfps
+`
+**Result:** No debug info or FPS counter appeared. PS2 may not support command-line args like PSX.
+
+### Activation Attempt 2: Memory Patching (TODO)
+- Change debug flag defaults in the executable
+- Modify initflags value (516 = 0x204)
+- Try changing specific flag values from 0 to 1
+
+### Activation Attempt 3: Button Combination (TODO)
+- Try common debug button combos at boot
+- Test in-game button combinations
+
+### Activation Attempt 4: Loading debugpackage.ps2 (TODO)
+- The debug package file exists in ALLPAKS
+- May contain debug tools/features when loaded
+
+### Status
+In Progress - SYSTEM.CNF method failed, investigating alternatives
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
