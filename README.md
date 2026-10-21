@@ -471,6 +471,58 @@ Create a debug menu for SpongeBob: Creature from the Krusty Krab (PS2) that can 
 ### Status
 🔄 In Progress - Investigating debug features
 
+
+---
+
+## Debug Menu Investigation
+
+### Debug Strings Found in Executable (SLUS_213.91)
+
+The following debug flags were found in the executable:
+
+| Flag | Description |
+|---|---|
+| debugswapsticks | Swap control sticks |
+| debuginvertxaxis | Invert X axis |
+| debuginvertyaxis | Invert Y axis |
+| debugcampcinput | Debug camera PC input |
+| debugpad | Debug pad |
+| debugfont | Debug font |
+| DebugPackage | Debug package (file exists in ALLPAKS) |
+| debugCamera | Debug camera |
+| DebugMessageEcho | Debug message echo |
+| aDebugEcho | Debug echo |
+| Free Camera | Free camera mode |
+| CFFlyAroundCamera | Fly around camera |
+| 
+odebugoutput | No debug output |
+| BONUS_UNLOCK_COSTUME_05_NOCODE | Costume 5 unlock (no code) |
+| BONUS_UNLOCK_COSTUME_01 | Costume 1 unlock |
+| BONUS_UNLOCK_ALL_DONE | All bonuses unlocked |
+
+### Debug Files Found in ALLPAKS
+
+| File | Size | Description |
+|---|---|---|
+| debugpackage.ps2 | 38,912 bytes | Debug package (contains font data) |
+| rontend_devpackage.ps2 | 1,150,976 bytes | Development frontend package |
+
+### Debug Activation Method
+
+The debug flags appear to be command-line arguments or config-based. The format in the executable is:
+`
+abbreviation.....fullname....
+`
+
+Each flag has a 2-letter abbreviation followed by the full name. These may be activated by:
+1. A specific button combination at boot
+2. A config file on the disc
+3. Loading the debugpackage.ps2 file
+4. Memory address manipulation at runtime
+
+### Status
+🔄 In Progress - Investigating activation method
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
