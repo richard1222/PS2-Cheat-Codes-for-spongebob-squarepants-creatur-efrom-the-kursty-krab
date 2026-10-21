@@ -1,0 +1,12 @@
+start:
+MOV r0, #5
+ADD r1, r0, #3
+CMP r1, #8
+BEQ success
+B fail
+success:
+SUB r0, r1, #2
+BX lr
+fail:
+MOV r0, #0
+BX lr
