@@ -67,3 +67,10 @@ py -m pip install -r requirements-optional.txt
 See `RELEASE_NOTES.md` for version-specific QA and release scope. The evidence-first
 workflow follows deucebucket's public [No Tool, No Blocker](https://github.com/deucebucket/no-tool-no-blocker)
 ideas without redistributing its code or installing its skill in ChatGPT.
+
+## Earlier PS2 cheats and research
+
+The repository also preserves its original PS2 cheat codes, developer-console
+research and notes in [`docs/PS2_CHEATS_RESEARCH_ARCHIVE.md`](https://github.com/richard1222/PS2-Cheat-Codes-for-spongebob-squarepants-creatur-efrom-the-kursty-krab/blob/main/docs/PS2_CHEATS_RESEARCH_ARCHIVE.md).
+That historical guide is not bundled in this small source-only release ZIP.
+
