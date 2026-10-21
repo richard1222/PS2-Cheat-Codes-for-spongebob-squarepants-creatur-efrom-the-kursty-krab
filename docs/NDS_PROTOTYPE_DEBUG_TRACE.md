@@ -41,3 +41,28 @@ The next validation is to boot the unchanged prototype and observe state 0.
 This DS menu uses DS graphics hardware (for example accesses in the 0x04000000
 range). Neither this state ID nor its ARM addresses can be used as PS2 patches.
 A PS2 executable or PS2 prototype is still required to establish a native path.
+
+
+## Runtime verification — 2026-10-21
+Booted the unchanged user-provided NDS image in DeSmuME 0.9.12,
+interpreter CPU, software rendering, headless SDL. After 180 frames the rendered
+screen visibly shows:
+- SpongeBob DS: Debug Menu
+- Thu May 25 18:20:43 PDT 2006
+- Page 1 of 3
+- LEVEL 01: Tutorial - License Chase, Engine Parts
+- LEVEL 02: Hot Rodding (Race)
+- LEVEL 03: Train Training
+- LEVEL 04: Money Bags, Thieves, Hostages
+- LEVEL 05: Krusty Krumb
+- LEVEL 06: Bull Worm - TOUCH
+- LEVEL 07: Bull Worm - FLYING
+- LEVEL 08: Rocket - FLYING
+
+This confirms automatic debug-menu rendering without an activation patch on
+this DS prototype in this emulator. It supersedes the earlier uncertainty about
+whether the menu renders at startup. It does not establish PS2 compatibility.
+
+Attempted scripted right/left/A input, but the captured final screen remained
+on page 1. Navigation and level launch are NOT verified; no successful launch
+is claimed. No game ROM or extracted executable is published.
