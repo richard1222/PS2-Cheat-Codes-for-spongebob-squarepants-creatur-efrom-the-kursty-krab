@@ -66,3 +66,29 @@ whether the menu renders at startup. It does not establish PS2 compatibility.
 Attempted scripted right/left/A input, but the captured final screen remained
 on page 1. Navigation and level launch are NOT verified; no successful launch
 is claimed. No game ROM or extracted executable is published.
+
+
+## Follow-up runtime verification — navigation and level launch
+Repeated tests with DeSmuME 0.9.12 using cycle(with_joystick=False), so the
+headless harness does not poll joystick state during scripted keypad input.
+The earlier unsuccessful input attempt did not demonstrate broken game controls.
+
+Observed:
+- Down changes the selected entry. Scrolling reaches pages 2 and 3 and wraps.
+- Page 2 includes levels 09–15.
+- Page 3 includes TEST INTRO UI, START MENU, MAIN MENU, LANGUAGE SELECT,
+  OPTIONS MENU, SpongeBob GYM, Patrick GYM, Plankton GYM, Test Screen Link,
+  Test Driving, Test Flying and Debug Menu (this screen).
+- From fresh boot, Down once selects Engine Parts. A launches a rendered scene
+  with SpongeBob on a platform. After 600 frames it remains rendered.
+- Holding Right for 90 frames changes SpongeBob/camera position, demonstrating
+  response to movement input. This does not constitute a full level test.
+- In a separate fresh boot, 15 Down taps selected Patrick GYM (selection was
+  visually checked). A launched a rendered test scene with Patrick, visible
+  terrain and a red object. Scene was checked after 600 frames.
+- No long-duration stability, completion, all-option, PS2 or PS3 tests performed.
+
+Boot and basic interaction now work without a ROM patch in this emulator.
+The prototype can supply verified menu structure and test-scene behavior as
+research references. A native PS2 implementation still needs PS2 executable
+analysis; these DS routines cannot be used as PS2 patch addresses.
