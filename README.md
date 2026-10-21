@@ -703,6 +703,36 @@ BOOT2 = cdrom0:\SLUS_213.91;1 debugpad showfps
 ### Status
 In Progress - SYSTEM.CNF method failed, investigating alternatives
 
+
+---
+
+## Debug Patch Attempt
+
+### Method: Executable Patching
+
+Patched SLUS_213.91 to enable debug mode:
+- Changed initflags from 516 (0x204) to 517 (0x205) - added bit 0
+- Changed debuginvertxaxis from 0 to 1
+
+### Test ISO
+- **File:** CftKK_Debug.iso (on desktop)
+- **Changes:** SLUS_213.91 patched in-place (ISO structure unchanged)
+- **Status:** Needs hardware testing
+
+### Expected Result
+If debug mode activates, the game should show:
+- Debug overlay (debugpad)
+- FPS counter (showfps)
+- Free camera (debugCamera)
+- Other debug features
+
+### If It Doesn't Work
+Alternative approaches:
+1. Try different initflags values (0x206, 0x20C, etc.)
+2. Patch the debug flag table directly
+3. Look for a button combination
+4. Try loading debugpackage.ps2
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
