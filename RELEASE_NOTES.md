@@ -19,6 +19,15 @@ useful before any retail PS2 executable is uploaded.
   allowlist, fixed timestamps, no binaries.
 - Synthetic fixture tests. Run `python -m unittest discover -s tests -v`.
 
+## Pre-release bug fixes
+
+- Corrected MIPS string-reference scanning around PS2 SPECIAL2, LL and SC
+  register writes, which could otherwise produce false-positive xrefs.
+- Corrected `loaded_occurrences` and `truncated` when a report hit limit was reached.
+- Added four regression tests.
+- Synchronized the GitHub ARM decoder with the locally tested version to
+  resolve a CI assertion failure involving the `BL` diagnostic wording.
+
 ## Out of scope / still unverified
 
 No PS2 debug-menu activation; no ISO patching or ISO building; no PS2 runtime test.
