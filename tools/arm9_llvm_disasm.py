@@ -12,6 +12,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+
 def disassemble(blob: bytes, base: int, offset: int, count: int,
                 clang='clang', objdump='llvm-objdump') -> str:
     if base<0 or base>0xffffffff or offset<0 or offset%4 or count<1 or count>256:
