@@ -44,12 +44,17 @@ def _writes_register(word: int, reg: int) -> bool:
         return rd == reg or (funct == 9 and reg == 31)
     if op == 3: # JAL writes RA
         return reg == 31
-    if op in (2,4,5,6,7,40,41,42,43,46,48,49,50,51,54,56,57,58,59,62,63):
+    if op in (2,4,5,6,7,40,41,42,43,46,49,50,51,54,57,58,59,62,63):
         # j/branches/stores (some opcodes conservatively handled by flow breaker)
         return False
-    if op in (16,17,18,19):
-        return True  # coprocessors and transfers: unknown effect in this scanner
-    return rt == reg  # I-type typical
+    if op in (16,17,18,19,28,31):
+        # Coprocessor instructions and PS2 MIPS SPECIAL2/SPECIAL3 may modify rd.
+        # An unknown writer cannot safely be treated as preserving the LUI value.
+        return True
+    if op in (8,9,10,11,12,13,14,15,24,25,26,27,32,33,34,35,36,37,38,39,48,52,56,60):
+        return rt == reg
+    # Undefined/unknown encodings are not safe to cross.
+    return True
 
 
 def _flow_break(word: int) -> bool:
@@ -120,12 +125,13 @@ def analyze(blob:bytes,terms=DEFAULT_TERMS,lookahead:int=6,max_hits:int=250):
     strings=[]
     for term in terms:
         if not term or not term.isascii():raise ValueError('search terms must be nonempty ASCII')
-        needle=term.lower().encode('ascii');off=0;total=0;hits=[]
+        needle=term.lower().encode('ascii');off=0;total=0;loaded=0;hits=[]
         while (idx:=lower.find(needle,off))>=0:
             off=idx+1;total+=1
             for seg in elf['segments']:
                 if not (seg['file_offset']<=idx<seg['file_offset']+seg['filesz']):continue
                 va=seg['vaddr']+idx-seg['file_offset']
+                loaded+=1
                 refs=candidates.get(va,[])
                 if len(hits)<max_hits:
                     hits.append({'string_file_offset':f'0x{idx:X}',
@@ -137,8 +143,8 @@ def analyze(blob:bytes,terms=DEFAULT_TERMS,lookahead:int=6,max_hits:int=250):
                                                 'lui_word':f'0x{x["lui_opcode"]:08X}',
                                                 'low_word':f'0x{x["low_opcode"]:08X}'} for x in refs]})
             # Never invent a VA for nonloaded strings.
-        strings.append({'term':term,'total_file_occurrences':total,'loaded_occurrences':len(hits),
-                        'truncated':total>max_hits,'hits':hits})
+        strings.append({'term':term,'total_file_occurrences':total,'loaded_occurrences':loaded,
+                        'truncated':loaded>max_hits,'hits':hits})
     return {'sha256':hashlib.sha256(blob).hexdigest(),'elf_endian':elf['endian'],
             'lookahead':lookahead,'strings':strings,
             'limitations':['Static executable-segment patterns only',
