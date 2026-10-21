@@ -323,6 +323,35 @@ ISO Root
 
 These prototypes may contain cut content not present in the retail version.
 
+
+---
+
+## Cancelled Ports
+
+The game was originally planned for additional platforms that were cancelled:
+- **Xbox** - Cancelled (placeholder license text found in files)
+- **Xbox 360** - Cancelled
+- **PlayStation 3** - Cancelled
+- **PlayStation Portable** - Cancelled
+
+Only released on: GameCube, PlayStation 2, Wii, Game Boy Advance, Nintendo DS, PC
+
+## DS Source Code (Archive.org)
+
+The Nintendo DS version's **source code and 33 prototypes** are available on archive.org:
+- [Source Code + Prototypes](https://archive.org/details/cftkk-ds-src)
+- 33 prototype builds (May 2006 - August 2006)
+- May be useful for understanding game structure (DS version is separate from PS2)
+
+## Gun Mechanic (Cut)
+
+The game originally had a **gun mechanic** that was cut due to Nickelodeon's concerns:
+- Wii remote's pointer was ideal for shooting
+- Various "wacky" shooting ideas were planned
+- Andrew Oliver (Blitz Games): "Nickelodeon were uncomfortable with shooting"
+- May still exist in game files (community investigating)
+- Other SpongeBob games (Atlantis SquarePantis) had shooting mechanics
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
