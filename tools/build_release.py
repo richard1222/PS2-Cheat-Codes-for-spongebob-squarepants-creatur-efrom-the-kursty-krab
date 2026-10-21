@@ -18,7 +18,7 @@ FILES=('README.md','RELEASE_NOTES.md','requirements-optional.txt',
        'tools/ps2_mips_string_xrefs.py',
        'tests/test_arm9_string_xrefs.py','tests/test_v03_guard.py',
        'tests/test_v04.py','tests/test_v05.py','tests/test_v10_cli.py',
-       'tests/test_v10_release.py')
+       'tests/test_v10_release.py','tests/test_v10_bugfixes.py')
 
 def package(target:Path, root:Path=ROOT):
     source={}
