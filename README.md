@@ -1,4 +1,4 @@
-﻿# SpongeBob SquarePants: Creature from the Krusty Krab (PS2) - Cheats
+# SpongeBob SquarePants: Creature from the Krusty Krab (PS2) - Cheats
 
 ![Platform](https://img.shields.io/badge/Platform-PS2-blue)
 ![Region](https://img.shields.io/badge/Region-USA-green)
