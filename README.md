@@ -523,6 +523,24 @@ Each flag has a 2-letter abbreviation followed by the full name. These may be ac
 ### Status
 🔄 In Progress - Investigating activation method
 
+
+---
+
+## Note on "Muse" Findings
+
+The "muse" findings referenced in some conversations are from the **Manhunt 2** project, not Krusty Krab. They relate to:
+- Manhunt 2's PMLC container format
+- Entity layer (ENTINST.BIN) decoding
+- Model grafting research
+
+These are **not applicable** to Krusty Krab, which uses a completely different engine (Blitz Games vs Rockstar's engine) and file format (ALLPAKS.PS2 vs PMLC/ENTINST).
+
+The Krusty Krab research is independent and focuses on:
+- ALLPAKS.PS2 extraction (Blitz Games format)
+- In-game cheat codes
+- Cut content identification
+- Debug menu investigation
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
