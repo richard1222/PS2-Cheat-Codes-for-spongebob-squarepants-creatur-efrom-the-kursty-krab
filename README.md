@@ -312,6 +312,58 @@ A Python-based extractor has been created: llpaks_extractor.py
 - Generates file list with offsets and sizes
 - No QuickBMS required
 
+
+---
+
+## ALLPAKS.PS2 Deep Analysis
+
+### Extracted Files Summary
+- **672 files** extracted (669 .ps2, 3 .txt, 1 .sys)
+- File sizes range from 1 KB to 9.5 MB
+- Total extracted size: ~558 MB
+
+### Key Files Found
+| File | Size | Description |
+|---|---|---|
+| onuspak_plankton gangster.ps2 | ~? KB | Unused Plankton gangster costume (confirmed cut content) |
+| debugpackage.ps2 | 38 KB | Debug package |
+| rontend_devpackage.ps2 | 1124 KB | Development frontend package |
+| sb 4_0_sbworm0a_cutscene.ps2 | 2318 KB | Cutscene file |
+
+### Bonus Pak Files (44 total)
+All character costumes and vehicle skins that correspond to in-game cheat codes:
+- SpongeBob: aviator, exposed brain, punk, skeleton, anvil variants
+- Patrick: tuxedo, pirate, safari, skeleton, rocket variants
+- Plankton: inventor, spongepants, gangster (unused), default
+- Giant Plankton: default, robot
+- Vehicles: hot rod, hypnotic car/hovercraft/rocket
+- World: bonuspak_world.ps2
+
+### Level Files
+The .ps2 files contain level data, models, and textures. File naming follows the pattern:
+- sb X_Y_*.ps2 - SpongeBob level sections
+- ptrk_*.ps2 - Patrick level sections
+- mini-*.ps2 - Mini-game worlds
+- diesel dreaming trans world *.ps2 - Diesel Dreaming transitions
+
+### File Format Notes
+- .ps2 files are proprietary Blitz Games format
+- Not directly editable like HIP/HOP files
+- Would need format reverse engineering for modding
+- QuickBMS blitz_games.bms script handles extraction
+
+### What Could Be Restored
+1. **Plankton Gangster Costume** - File exists, could be re-enabled
+2. **Debug Package** - Could contain debug tools/features
+3. **Dev Frontend** - Development menu elements
+4. **Unused Cutscene** - sb 4_0_sbworm0a_cutscene.ps2
+
+### Limitations
+- ALLPAKS.PS2 is a single archive - no easy file replacement
+- Modifying requires extracting, editing, and repacking
+- Repacking not supported by QuickBMS (size limitations)
+- Would need custom tooling for reimport
+
 ## Resources
 
 - [GameGenie Cheats](https://gamegenie.com/cheats/ps2/spongebobcreature.html)
