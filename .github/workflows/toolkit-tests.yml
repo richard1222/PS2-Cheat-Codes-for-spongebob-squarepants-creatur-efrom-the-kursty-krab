@@ -1,0 +1,28 @@
+name: SpongeBob toolkit Python tests
+
+on:
+  push:
+    paths:
+      - "tools/**"
+      - "tests/**"
+      - ".github/workflows/toolkit-tests.yml"
+  pull_request:
+    paths:
+      - "tools/**"
+      - "tests/**"
+      - ".github/workflows/toolkit-tests.yml"
+  workflow_dispatch:
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run standard-library unit tests
+        run: python -m unittest discover -s tests -v
