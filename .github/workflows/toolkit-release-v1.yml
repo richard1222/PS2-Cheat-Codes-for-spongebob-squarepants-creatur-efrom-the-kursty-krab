@@ -34,11 +34,13 @@ jobs:
           set -euo pipefail
           python tools/build_release.py "$RUNNER_TEMP/spongebob-toolkit-v1.1.0.zip"
           python - <<'PY'
-          import hashlib, os, zipfile
+          import hashlib, os, zipfile, sys
+          sys.path.insert(0, "tools")
+          from build_release import FILES
           archive = os.path.join(os.environ['RUNNER_TEMP'], 'spongebob-toolkit-v1.1.0.zip')
           with zipfile.ZipFile(archive) as z:
               names = z.namelist()
-              assert len(names) == 22 and len(names) == len(set(names)), names
+              assert len(names) == len(FILES) + 1 and len(names) == len(set(names)), names
               assert all(n.startswith('spongebob-toolkit-v1.1.0/') for n in names)
               manifest = z.read('spongebob-toolkit-v1.1.0/MANIFEST.sha256').decode('ascii')
               for row in manifest.splitlines():

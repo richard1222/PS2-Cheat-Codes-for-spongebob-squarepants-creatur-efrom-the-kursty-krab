@@ -83,3 +83,15 @@ That historical guide is not bundled in this small source-only release ZIP.
 validates the NDS ARM9 extent and runs the existing debug-string/call-context
 analysis directly on the prototype. The input remains unchanged. DS addresses
 are research leads, not PS2 patch offsets.
+
+## PS2 configuration references (development)
+
+```powershell
+py tools/spongebob.py inspect-address SLUS_213.91 --address 0x5138E4 --json config-refs.json
+```
+
+Finds aligned pointer slots in loaded segments and candidate `LUI` plus
+immediate memory accesses to exact virtual addresses. Inputs remain unchanged;
+reports identify the input SHA-256. Addresses are specific to the analyzed build.
+Unknown register writes and control transfers stop speculative tracking. This
+command does not follow indirect or `$gp` references or establish reachability.

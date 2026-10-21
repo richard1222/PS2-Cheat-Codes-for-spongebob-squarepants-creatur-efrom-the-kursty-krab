@@ -102,13 +102,23 @@ def build_parser() -> argparse.ArgumentParser:
     n.add_argument('--radius', type=int, default=12)
     n.add_argument('--max-hits', type=int, default=100)
     n.add_argument('--json', type=Path)
+    x = subs.add_parser('inspect-address', help='Read-only MIPS data-reference candidates')
+    x.add_argument('input', type=Path)
+    x.add_argument('--address', type=lambda s: int(s, 0), action='append', required=True)
+    x.add_argument('--lookahead', type=int, default=6)
+    x.add_argument('--max-hits', type=int, default=100)
+    x.add_argument('--json', type=Path)
     return parser
 
 
 def run(args: argparse.Namespace) -> dict:
     if args.command == 'doctor':
         return doctor()
-    if args.command == 'scan-nds':
+    if args.command == 'inspect-address':
+        from ps2_data_xrefs import inspect_addresses
+        result = inspect_addresses(load_bounded(args.input, MAX_ELF),
+                                   args.address, args.lookahead, args.max_hits)
+    elif args.command == 'scan-nds':
         from nds_probe import MAX_NDS, inspect_nds
         from arm9_string_xrefs import DEFAULT_TERMS
         if not 1 <= args.max_hits <= 10000:
